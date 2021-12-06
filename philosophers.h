@@ -6,7 +6,7 @@
 /*   By: khee-seo <khee-seo@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 13:59:44 by khee-seo          #+#    #+#             */
-/*   Updated: 2021/12/06 16:27:22 by khee-seo         ###   ########.fr       */
+/*   Updated: 2021/12/06 19:22:01 by khee-seo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ typedef struct s_philo
 	int				eat;
 	long long		time;
 	pthread_t		thread;
-	struct s_rule	*rule;
-	pthread_mutex_t	eating;
 }					t_philo;
 
 typedef struct	s_rule
