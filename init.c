@@ -6,51 +6,66 @@
 /*   By: khee-seo <khee-seo@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:51:51 by khee-seo          #+#    #+#             */
-/*   Updated: 2021/12/06 19:18:34 by khee-seo         ###   ########.fr       */
+/*   Updated: 2021/12/07 14:39:51 by khee-seo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosophers.h"
 
-long long	get_time(void)
-{
-	struct timeval	time;
-
-	gettimeofday(&time, NULL);
-	return ((time.tv_sec * 1000) + (time.tv_usec / 1000));
-}
-
-int	init_philo(t_rule *rule)
+int	init_mutex(t_rule *rule)
 {
 	int	i;
+	int	j;
 
-	i = 0;
-	rule->philo = (t_philo *)malloc(sizeof(t_philo) * rule->head);
-	if (!(rule->philo))
-		return (1);
-	while (i < rule->head)
-	{
-		
-	}
-	reutnr (0);
-}
-
-int	init_forks(t_rule *rule)
-{
-	int				i;
-	
-	rule->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * rule->head);
-	if (!(rule->forks))
+	if (pthread_mutex_init(&(rule->print), NULL))
 		return (1);
 	i = 0;
 	while (i < rule->head)
 	{
 		if (pthread_mutex_init(&(rule->forks[i]), NULL))
+		{
+			pthread_mutex_destroy(&(rule->print));
+			j = 0;
+			while (j < i)
+			{
+				pthread_mutex_destroy(&(rule->forks[j]));
+				j++;
+			}
 			return (1);
+		}
 		i++;
 	}
-	if (pthread_mutex_init(&(rule->print), NULL))
+	return (0);
+}
+
+void	init_philo(t_rule *rule)
+{
+	int	i;
+
+	i = 0;
+	while (i < rule->head)
+	{
+		rule->philo[i].i = i;
+		rule->philo[i].fork_l = i;
+		rule->philo[i].fork_r = (i + 1) % rule->head;
+		rule->philo[i].eat = 0;
+		rule->philo[i].time = get_time();
+		rule->philo[i].rule = rule;
+		i++;
+	}
+}
+
+int	init_malloc(t_rule *rule)
+{
+	rule->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * rule->head);
+	if (!(rule->forks))
 		return (1);
+	rule->philo = (t_philo *)malloc(sizeof(t_philo) * rule->head);
+	if (!(rule->philo))
+	{
+		free(rule->forks);
+		return (1);
+	}
 	return (0);
 }
 
@@ -67,12 +82,8 @@ int	init_rule(t_rule *rule, char **argv)
 		rule->c_eat = ft_atoi(argv[5]);
 	else
 		rule->c_eat = -1;
-	rule->philo = NULL;
-	rule->st_time = get_time();
-	rule->die = 0;
+	rule->alive = 1;
 	//all eat이 들어갈 자리이나 없어도 구현이 가능할것같음. 추후수정
-	if (init_forks(rule) || init_philo(rule))
-		return (1);
 	return (0);
 }
 
