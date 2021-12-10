@@ -6,7 +6,7 @@
 /*   By: khee-seo <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 14:27:44 by khee-seo          #+#    #+#             */
-/*   Updated: 2021/12/07 16:36:45 by khee-seo         ###   ########.fr       */
+/*   Updated: 2021/12/10 15:25:31 by khee-seo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	print(t_rule *rule, char *str, int i)
 	if (rule->alive)
 	{
 		pthread_mutex_lock(&(rule->print));
-		printf("%lld %d ", get_time() - rule->st_time, i + 1); //어차피 create 하기전에 한번만 시간 따놓으면됨
+		printf("%lld %d ", get_time() - rule->st_time, i + 1);
 		printf("%s\n", str);
 		pthread_mutex_unlock(&(rule->print));
 	}
@@ -39,9 +39,45 @@ void	eat(t_rule *rule, t_philo *ph)
 	{
 		if (rule->t_eat <= get_time() - ph->time)
 			break ;
-		usleep(50); // 필요할까? 어차피 스레드별로 해당 while을 계속 돌며 임계점을 넘는순간 정지시키는데?
-		// 딜레이없이 계속해서 시간을 가져오면 과부하가 걸린다?
+		usleep(50);
 	}
-	ph->eat++;
+	ph->eat = ph->eat + 1;
+	if (ph->eat == rule->c_eat)
+		rule->all_eat = rule->all_eat - 1;
+	pthread_mutex_unlock(&(rule->forks[ph->fork_l]));
+	pthread_mutex_unlock(&(rule->forks[ph->fork_r]));
+}
 
+void	sleeping(t_rule *rule, t_philo *ph)
+{
+	long long	st;
+	
+	print(rule, "is sleeping", ph->i);
+	st = get_time();
+	while (rule->alive)
+	{
+		if ((get_time() - st) >= rule->t_sleep)
+			break ;
+		usleep(50);
+	}
+}
+
+void	check_die(t_rule *rule, t_philo *ph)
+{
+	int	i;
+	
+	while (rule->alive && rule->all_eat != 0)
+	{
+		i = 0;
+		while (i < rule->head && rule->all_eat != 0)
+		{
+			if (get_time() - ph[i].time > rule->t_die)
+			{
+				print(rule, "died", ph[i].i);
+				rule->alive = 0;
+			}
+			i++;
+			usleep(50);
+		}
+	}
 }

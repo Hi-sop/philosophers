@@ -6,7 +6,7 @@
 /*   By: khee-seo <khee-seo@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:51:51 by khee-seo          #+#    #+#             */
-/*   Updated: 2021/12/07 14:39:51 by khee-seo         ###   ########.fr       */
+/*   Updated: 2021/12/10 15:34:29 by khee-seo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,9 @@ int	init_rule(t_rule *rule, char **argv)
 		rule->c_eat = ft_atoi(argv[5]);
 	else
 		rule->c_eat = -1;
+	rule->st_time = get_time();
 	rule->alive = 1;
-	//all eat이 들어갈 자리이나 없어도 구현이 가능할것같음. 추후수정
+	rule->all_eat = rule->head;
 	return (0);
 }
 
