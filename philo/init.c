@@ -6,7 +6,7 @@
 /*   By: khee-seo <khee-seo@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:51:51 by khee-seo          #+#    #+#             */
-/*   Updated: 2021/12/10 15:34:29 by khee-seo         ###   ########.fr       */
+/*   Updated: 2021/12/10 16:13:20 by khee-seo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ void	init_philo(t_rule *rule)
 
 int	init_malloc(t_rule *rule)
 {
-	rule->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t) * rule->head);
+	rule->forks = (pthread_mutex_t *)malloc(sizeof(pthread_mutex_t)
+			* rule->head);
 	if (!(rule->forks))
 		return (1);
 	rule->philo = (t_philo *)malloc(sizeof(t_philo) * rule->head);
@@ -76,7 +77,7 @@ int	init_rule(t_rule *rule, char **argv)
 	rule->t_eat = ft_atoi(argv[3]);
 	rule->t_sleep = ft_atoi(argv[4]);
 	if (rule->head < 1 || rule->t_die < 1
-			|| rule->t_eat == -1 || rule->t_sleep == -1)
+		|| rule->t_eat == -1 || rule->t_sleep == -1)
 		return (1);
 	if (argv[5])
 		rule->c_eat = ft_atoi(argv[5]);
@@ -87,4 +88,3 @@ int	init_rule(t_rule *rule, char **argv)
 	rule->all_eat = rule->head;
 	return (0);
 }
-

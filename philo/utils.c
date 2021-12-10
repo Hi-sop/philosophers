@@ -6,7 +6,7 @@
 /*   By: khee-seo <khee-seo@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:21:44 by khee-seo          #+#    #+#             */
-/*   Updated: 2021/12/10 13:43:56 by khee-seo         ###   ########.fr       */
+/*   Updated: 2021/12/10 16:18:56 by khee-seo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	error(char *str)
 void	free_all(t_rule *rule)
 {
 	int	i;
-	
+
 	i = 0;
 	while (i < rule->head)
 	{
@@ -57,7 +57,7 @@ int	ft_atoi(char *str)
 	{
 		if (!((9 <= str[i] && str[i] <= 13) || ('0' <= str[i] && str[i] <= '9')
 				|| str[i] == ' '))
-				return (-1);
+			return (-1);
 		i++;
 	}
 	i = 0;

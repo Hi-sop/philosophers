@@ -6,7 +6,7 @@
 /*   By: khee-seo <khee-seo@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:19:54 by khee-seo          #+#    #+#             */
-/*   Updated: 2021/12/10 15:29:03 by khee-seo         ###   ########.fr       */
+/*   Updated: 2021/12/10 15:50:22 by khee-seo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	init_thread(t_rule *rule)
 	while (i < rule->head)
 	{
 		if (pthread_create(&(rule->philo[i].thread), NULL,
-					thread_running, &(rule->philo[i])))
+				thread_running, &(rule->philo[i])))
 		{
 			j = 0;
 			while (j < i)
@@ -59,17 +59,16 @@ int	init_thread(t_rule *rule)
 	return (0);
 }
 
-
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_rule	rule;
-	
+
 	if (argc < 5 || 6 < argc)
 		return (error("Error : argc count\n"));
 	if (init_rule(&rule, argv))
 		return (error("Error : input value\n"));
 	if (init_malloc(&rule))
-		return (error("Error : malloc\n"));	
+		return (error("Error : malloc\n"));
 	init_philo(&rule);
 	if (init_mutex(&rule))
 		return (error("Error : mutex init\n"));
@@ -77,5 +76,5 @@ int main(int argc, char **argv)
 		return (error("Error : thread init\n"));
 	check_die(&rule, rule.philo);
 	free_all(&rule);
-	return (0);	
+	return (0);
 }

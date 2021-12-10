@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   running.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: khee-seo <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: khee-seo <khee-seo@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 14:27:44 by khee-seo          #+#    #+#             */
-/*   Updated: 2021/12/10 15:25:31 by khee-seo         ###   ########.fr       */
+/*   Updated: 2021/12/10 16:18:22 by khee-seo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	eat(t_rule *rule, t_philo *ph)
 void	sleeping(t_rule *rule, t_philo *ph)
 {
 	long long	st;
-	
+
 	print(rule, "is sleeping", ph->i);
 	st = get_time();
 	while (rule->alive)
@@ -65,7 +65,7 @@ void	sleeping(t_rule *rule, t_philo *ph)
 void	check_die(t_rule *rule, t_philo *ph)
 {
 	int	i;
-	
+
 	while (rule->alive && rule->all_eat != 0)
 	{
 		i = 0;
