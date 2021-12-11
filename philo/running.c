@@ -6,7 +6,7 @@
 /*   By: khee-seo <khee-seo@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/07 14:27:44 by khee-seo          #+#    #+#             */
-/*   Updated: 2021/12/10 16:18:22 by khee-seo         ###   ########.fr       */
+/*   Updated: 2021/12/11 12:33:50 by khee-seo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,12 @@ void	take_fork(t_rule *rule, t_philo *ph)
 
 void	eat(t_rule *rule, t_philo *ph)
 {
+	if (ph->eat == rule->c_eat)
+	{
+		pthread_mutex_unlock(&(rule->forks[ph->fork_l]));
+		pthread_mutex_unlock(&(rule->forks[ph->fork_r]));
+		return ;
+	}
 	print(rule, "is eating", ph->i);
 	ph->time = get_time();
 	while (rule->alive)
