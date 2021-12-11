@@ -6,7 +6,7 @@
 /*   By: khee-seo <khee-seo@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/06 14:19:54 by khee-seo          #+#    #+#             */
-/*   Updated: 2021/12/10 15:50:22 by khee-seo         ###   ########.fr       */
+/*   Updated: 2021/12/11 12:42:25 by khee-seo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	*thread_running(void *philo)
 	rule = ph->rule;
 	if (ph->i % 2)
 		usleep(1000 * 10);
-	while (rule->alive && rule->all_eat)
+	while (rule->alive && rule->c_eat != ph->eat)
 	{
 		if (ph->fork_l == ph->fork_r)
 			break ;
